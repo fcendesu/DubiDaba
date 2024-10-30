@@ -26,7 +26,7 @@ const FormFill = () => {
 
             <View>
                 <Text className="text-white text-center mb-1 text-3xl font-bold">AD</Text>
-                <TextInput className="text-white bg-primary w-[251px] h-[44] rounded-full"
+                <TextInput className="text-black font-semibold text-center text-lg bg-primary w-[251px] h-[44px] rounded-full"
                 value={form.name}
                 onChangeText={(e) => setForm({ ...form, name: e })}
                 />
@@ -34,22 +34,22 @@ const FormFill = () => {
 
             <View className="mt-6">
                 <Text className="text-white text-center mb-1 text-3xl font-bold">Soyad</Text>
-                <TextInput className="text-white bg-primary w-[251px] h-[44] rounded-full"
+                <TextInput className="text-black font-semibold text-center text-lg bg-primary w-[251px] h-[44px] rounded-full"
                 value={form.surname}
-                onChangeText={(e) => setForm({ ...form, name: e })}
+                onChangeText={(e) => setForm({ ...form, surname: e })}
                 />
             </View>
 
             <View className="mt-6">
                 <Text className="text-white text-center mb-1 text-3xl font-bold">Doğum Tarihi</Text>
-                <TextInput className="text-white bg-primary w-[251px] h-[44] rounded-full"
+                <TextInput className="ttext-black font-semibold text-center text-lg bg-primary w-[251px] h-[44px] rounded-full"
                 value={form.surname}
                 onChangeText={(e) => setForm({ ...form, name: e })}
                 />
             </View>
 
-            <View className="mt-6">
-                <TouchableOpacity className="bg-customGreen rounded-full w-[138px] h-[35] justify-center items-center"
+            <View className="mt-10">
+                <TouchableOpacity className="bg-customGreen rounded-full w-[138px] h-[35px] justify-center items-center"
                 onPress={() => router.push('/loading')} 
                 >
                     <Text className="  text-white text-center text-3xl font-semibold">ONAYLA</Text>
