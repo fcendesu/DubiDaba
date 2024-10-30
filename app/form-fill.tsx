@@ -1,7 +1,7 @@
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import { router } from "expo-router";
 import React, { useState } from "react";
-import { Alert, Button, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const FormFill = () => {
@@ -31,10 +31,10 @@ const FormFill = () => {
   };
 
   const handleSubmit = () => {
-    if (!form.name || !form.surname || !date) {
+    /*if (!form.name || !form.surname || !date) {
       Alert.alert("Eksik Bilgi", "Lütfen tüm alanları doldurunuz.");
       return;
-    }
+    }*/
     router.push('/loading');
   };
 

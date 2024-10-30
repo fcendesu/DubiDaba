@@ -8,6 +8,8 @@ export default function RootLayout() {
       options={{headerShown:false}} />
       <Stack.Screen name="form-fill"
       options={{headerShown:false}} />
+      <Stack.Screen name="loading"
+      options={{headerShown:false}} />
       
     </Stack>
   );
