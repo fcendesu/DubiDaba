@@ -1,6 +1,7 @@
+import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import { router } from "expo-router";
-import { useState } from "react";
-import { ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import React, { useState } from "react";
+import { Alert, Button, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const FormFill = () => {
@@ -8,12 +9,36 @@ const FormFill = () => {
     const [form, setForm] = useState({
         name: "",
         surname: "",
-        date: Date,
         });
+    
+    const [isPrintDate, setIsPrintDate] = useState(false);
+
+    const [date, setDate] = useState<Date | null>(null);
+
+  const onChange = (event: any, selectedDate?: Date) => {
+    if (selectedDate) {
+    setDate(selectedDate);
+    setIsPrintDate(true);
+    }
+  };
+
+  const showDatepicker = () => {
+    DateTimePickerAndroid.open({
+      value: date || new Date(),
+      onChange,
+      mode: 'date',
+    });
+  };
+
+  const handleSubmit = () => {
+    if (!form.name || !form.surname || !date) {
+      Alert.alert("Eksik Bilgi", "Lütfen tüm alanları doldurunuz.");
+      return;
+    }
+    router.push('/loading');
+  };
 
   return (
-    
-    
     
     <SafeAreaView className="flex-1 bg-black h-full">
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -33,7 +58,7 @@ const FormFill = () => {
             </View>
 
             <View className="mt-6">
-                <Text className="text-white text-center mb-1 text-3xl font-bold">Soyad</Text>
+                <Text className="text-white text-center mb-1 text-3xl font-bold">SOYAD</Text>
                 <TextInput className="text-black font-semibold text-center text-lg bg-primary w-[251px] h-[44px] rounded-full"
                 value={form.surname}
                 onChangeText={(e) => setForm({ ...form, surname: e })}
@@ -41,23 +66,22 @@ const FormFill = () => {
             </View>
 
             <View className="mt-6">
-                <Text className="text-white text-center mb-1 text-3xl font-bold">Doğum Tarihi</Text>
-                <TextInput className="ttext-black font-semibold text-center text-lg bg-primary w-[251px] h-[44px] rounded-full"
-                value={form.surname}
-                onChangeText={(e) => setForm({ ...form, name: e })}
-                />
+                <Text className="text-white text-center mb-1 text-3xl font-bold">DOĞUM TARİHİ</Text>
+                 <TouchableOpacity className= "bg-primary w-[251px] h-[44px] rounded-full justify-center items-center"
+                onPress={showDatepicker} 
+                >
+                    <Text className=" text-black font-semibold text-center text-lg">
+                      { isPrintDate && date ? date.toLocaleDateString("tr-TR") : "" }</Text>
+                </TouchableOpacity>
             </View>
 
             <View className="mt-10">
                 <TouchableOpacity className="bg-customGreen rounded-full w-[138px] h-[35px] justify-center items-center"
-                onPress={() => router.push('/loading')} 
+                onPress={handleSubmit} 
                 >
                     <Text className="  text-white text-center text-3xl font-semibold">ONAYLA</Text>
                 </TouchableOpacity>
-            </View>
-            
-
-            
+              </View>
           </View>
 
 
@@ -76,9 +100,6 @@ const FormFill = () => {
       
     </ScrollView>
   </SafeAreaView>
-
-
-
 
 
   )
