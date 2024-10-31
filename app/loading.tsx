@@ -1,57 +1,51 @@
-import { View, Text, ScrollView } from 'react-native'
-import React from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import LottieView from 'lottie-react-native';
-
-
+import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import React from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
+import LottieView from "lottie-react-native";
+import { router } from "expo-router";
 
 const Loading = () => {
   return (
-    
-
     <SafeAreaView className="flex-1 bg-black h-full">
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-      <View className="flex-1 justify-center items-center">
-          <View className="h-[93%] items-center justify-center" >
-            
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <View className="flex-1">
+          <View className="h-[93%] items-center justify-center">
             <View>
-            <LottieView
-              source={require('../assets/animations/Animation - 1730325384506.json')}
-              autoPlay
-              loop
-              style={{ width: 200, height: 200 }}
-            />
-
+              <LottieView
+                source={require("../assets/animations/Animation - 1730325384506.json")}
+                autoPlay
+                loop
+                style={{ width: 200, height: 200 }}
+              />
             </View>
-          
 
             <Text className="text-white mb-10 font-semibold">
               Yükleniyor...
             </Text>
 
-
-          </View>
-
-
-          <View className=" h-[7%] ">
-            <View className="h-[1px] bg-white w-[85%] mx-auto"/>
-
-            <View className="justify-center items-center mt-3">
-              <Text className=" text-gray-100 text-center">
-                DabaDubi
-              </Text>
-              
+            <View className="mt-10">
+              <TouchableOpacity
+                className="bg-customGreen rounded-full w-[138px] h-[35px] justify-center items-center"
+                onPress={() => router.push("/share")}
+              >
+                <Text className="  text-white text-center text-3xl font-semibold">
+                  ONAYLA
+                </Text>
+              </TouchableOpacity>
             </View>
           </View>
 
-        </View> 
-      
-    </ScrollView>
-  </SafeAreaView>
+          <View className=" h-[7%] ">
+            <View className="h-[1px] bg-white w-[85%] mx-auto" />
 
+            <View className="justify-center items-center mt-3">
+              <Text className=" text-gray-100 text-center">DabaDubi</Text>
+            </View>
+          </View>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
+};
 
-
-  )
-}
-
-export default Loading
+export default Loading;

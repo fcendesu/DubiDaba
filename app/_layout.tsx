@@ -10,6 +10,8 @@ export default function RootLayout() {
       options={{headerShown:false}} />
       <Stack.Screen name="loading"
       options={{headerShown:false}} />
+      <Stack.Screen name="share"
+      options={{headerShown:false}} />
       
     </Stack>
   );
