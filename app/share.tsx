@@ -14,6 +14,7 @@ const Share = () => {
                 <X color="white" size={30} />
               </TouchableOpacity>
             </View>
+            
             <View className="items-center justify-center mt-[-2]">
               <Image
                 source={require("../assets/images/first-quarter.webp")}
