@@ -2,9 +2,24 @@ import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import LottieView from "lottie-react-native";
-import { router } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import { useEffect } from "react";
 
 const Loading = () => {
+  const router = useRouter();
+  const { name, birthDay, moonPhase } = useLocalSearchParams();
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      router.replace({
+        pathname: "/share",
+        params: { name, birthDay, moonPhase },
+      });
+    }, 3000); // Simulate 3 seconds of loading
+
+    return () => clearTimeout(timeout);
+  }, [router, name, birthDay, moonPhase]);
+
   return (
     <SafeAreaView className="flex-1 bg-black h-full">
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
