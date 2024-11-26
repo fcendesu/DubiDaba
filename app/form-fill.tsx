@@ -41,10 +41,10 @@ const FormFill = () => {
   };
 
   const handleSubmit = () => {
-    /*if (!form.name || !form.surname || !date) {
+    if (!form.name || !form.surname || !date) {
       Alert.alert("Eksik Bilgi", "Lütfen tüm alanları doldurunuz.");
       return;
-    }*/
+    }
     router.push({
       pathname: "/loading",
       params: {

@@ -37,17 +37,6 @@ const Loading = () => {
             <Text className="text-white mb-10 font-semibold">
               Yükleniyor...
             </Text>
-
-            <View className="mt-10">
-              <TouchableOpacity
-                className="bg-customGreen rounded-full w-[138px] h-[35px] justify-center items-center"
-                onPress={() => router.push("/share")}
-              >
-                <Text className="  text-white text-center text-3xl font-semibold">
-                  ONAYLA
-                </Text>
-              </TouchableOpacity>
-            </View>
           </View>
 
           <View className=" h-[7%] ">
