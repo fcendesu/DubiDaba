@@ -1,5 +1,12 @@
-import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
-import React from "react";
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  Switch,
+} from "react-native";
+import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { X } from "lucide-react-native";
 import { useLocalSearchParams } from "expo-router";
@@ -27,6 +34,9 @@ const Share = () => {
     return require("../assets/images/first-quarter.webp");
   };
 
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+
   return (
     <SafeAreaView className="flex-1 bg-black h-full">
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -52,13 +62,23 @@ const Share = () => {
                 {birthDay}
               </Text>
             </View>
-            <View className="mt-10">
+            <View className="my-10">
+              <View className="flex-row items-center justify-center my-5">
+                <Text className="text-white ">Tarihi gizle</Text>
+                <Switch
+                  trackColor={{ false: "#FFFF", true: "#65558F" }}
+                  thumbColor={isEnabled ? "#FFFFFF" : "#FFFFFF"}
+                  onValueChange={toggleSwitch}
+                  value={isEnabled}
+                />
+              </View>
+
               <TouchableOpacity
-                className="bg-customGreen rounded-full w-[138px] h-[35px] justify-center items-center"
-                onPress={handleSubmit}
+                className="bg-purple rounded-full w-[138px] h-[35px] justify-center items-center"
+                onPress={() => {}}
               >
-                <Text className="  text-white text-center text-3xl font-semibold">
-                  ONAYLA
+                <Text className=" text-white text-center text-3xl font-semibold">
+                  Paylaş
                 </Text>
               </TouchableOpacity>
             </View>
