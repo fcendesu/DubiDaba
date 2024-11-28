@@ -64,7 +64,7 @@ const Share = () => {
             </View>
             <View className="my-10">
               <View className="flex-row items-center justify-center my-5">
-                <Text className="text-white ">Tarihi gizle</Text>
+                <Text className="text-white ">Tarihi gizleee</Text>
                 <Switch
                   trackColor={{ false: "#FFFF", true: "#65558F" }}
                   thumbColor={isEnabled ? "#FFFFFF" : "#FFFFFF"}
