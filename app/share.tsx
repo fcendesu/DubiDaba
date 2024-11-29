@@ -5,11 +5,14 @@ import {
   Image,
   TouchableOpacity,
   Switch,
+  Alert,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { X } from "lucide-react-native";
 import { useLocalSearchParams } from "expo-router";
+import { captureRef } from "react-native-view-shot";
+import * as Sharing from "expo-sharing";
 
 const Share = () => {
   const { name, birthDay, moonPhase } = useLocalSearchParams();
@@ -37,6 +40,36 @@ const Share = () => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
 
+  // Ref to capture the view
+  const viewRef = useRef(null);
+
+  const handleShare = async () => {
+    try {
+      // Capture the view as an image
+      // Add a small delay to ensure the UI is fully rendered
+      console.log("ui");
+
+      console.log("uri1");
+      const uri = await captureRef(viewRef);
+      console.log("uri");
+      // Check if sharing is available
+      if (!(await Sharing.isAvailableAsync())) {
+        Alert.alert("Error", "Sharing is not available on this device.");
+        return;
+      }
+
+      // Share the image
+      await Sharing.shareAsync(uri, {
+        mimeType: "image/png",
+        dialogTitle: "Share your Moon Phase",
+        UTI: "public.png",
+      });
+    } catch (error) {
+      console.error("Error sharing the image:", error);
+      Alert.alert("Error", "Failed to share the image.");
+    }
+  };
+
   return (
     <SafeAreaView className="flex-1 bg-black h-full">
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -48,7 +81,11 @@ const Share = () => {
               </TouchableOpacity>
             </View>
 
-            <View className="items-center justify-center mt-[-2]">
+            <View
+              className="items-center justify-center mt-12"
+              ref={viewRef}
+              collapsable={false}
+            >
               <Image
                 source={MoonPhase(moonPhaseStr || "First Quarter")}
                 className="w-[357px] h-[342px] "
@@ -58,13 +95,15 @@ const Share = () => {
               <Text className="text-white mt-3 font-semibold text-lg">
                 {name}
               </Text>
-              <Text className="text-white mt-3 font-semibold text-3xl">
-                {birthDay}
-              </Text>
+              {!isEnabled && (
+                <Text className="text-white mt-3 font-semibold text-3xl">
+                  {birthDay}
+                </Text>
+              )}
             </View>
             <View className="my-10">
               <View className="flex-row items-center justify-center my-5">
-                <Text className="text-white ">Tarihi gizleee</Text>
+                <Text className="text-white ">Tarihi gizle</Text>
                 <Switch
                   trackColor={{ false: "#FFFF", true: "#65558F" }}
                   thumbColor={isEnabled ? "#FFFFFF" : "#FFFFFF"}
@@ -75,7 +114,7 @@ const Share = () => {
 
               <TouchableOpacity
                 className="bg-purple rounded-full w-[138px] h-[35px] justify-center items-center"
-                onPress={() => {}}
+                onPress={handleShare}
               >
                 <Text className=" text-white text-center text-3xl font-semibold">
                   Paylaş
