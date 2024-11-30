@@ -2,70 +2,98 @@ import {
   View,
   Text,
   ScrollView,
-  Image,
   TouchableOpacity,
   Switch,
   Alert,
+  Platform,
+  Linking,
 } from "react-native";
 import React, { useState, useRef } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { X } from "lucide-react-native";
 import { useLocalSearchParams } from "expo-router";
-import { captureRef } from "react-native-view-shot";
 import * as Sharing from "expo-sharing";
+import * as FileSystem from "expo-file-system";
+
+import MoonPhaseDisplay from "../components/MoonPhaseDisplay";
+
+import type { SkImage } from "@shopify/react-native-skia";
+import { makeImageFromView } from "@shopify/react-native-skia";
+import { ImageFormat } from "@shopify/react-native-skia";
+import * as MediaLibrary from "expo-media-library";
 
 const Share = () => {
   const { name, birthDay, moonPhase } = useLocalSearchParams();
   const moonPhaseStr = Array.isArray(moonPhase) ? moonPhase[0] : moonPhase;
-  const MoonPhase = (moonPhase: string) => {
-    if (moonPhase === "New Moon")
-      return require("../assets/images/new-moon.webp");
-    if (moonPhase === "Waxing Crescent")
-      return require("../assets/images/waxing-crescent.webp");
-    if (moonPhase === "First Quarter")
-      return require("../assets/images/first-quarter.webp");
-    if (moonPhase === "Waxing Gibbous")
-      return require("../assets/images/waxing-gibbous.webp");
-    if (moonPhase === "Full Moon") return require("../assets/images/full.webp");
-    if (moonPhase === "Waning Gibbous")
-      return require("../assets/images/waning-gibbous.webp");
-    if (moonPhase === "Third Quarter")
-      return require("../assets/images/third-quarter.webp");
-    if (moonPhase === "Waning Crescent")
-      return require("../assets/images/waning-crescent.webp");
-
-    return require("../assets/images/first-quarter.webp");
-  };
 
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
 
-  // Ref to capture the view
-  const viewRef = useRef(null);
+  // Create a ref for the view you'd like to take a snapshot of
+  const ref = useRef<View>(null);
+  // Create a state variable to store the snapshot
+
+  const [image, setImage] = useState<SkImage | null>(null);
 
   const handleShare = async () => {
     try {
-      // Capture the view as an image
-      const uri = await captureRef(viewRef, {
-        format: "png",
-        quality: 1,
-      });
-
-      // Check if sharing is available
-      if (!(await Sharing.isAvailableAsync())) {
-        Alert.alert("Error", "Sharing is not available on this device.");
+      // Request media library permissions
+      const { status } = await MediaLibrary.requestPermissionsAsync();
+      if (status !== "granted") {
+        Alert.alert(
+          "Permission Needed",
+          "Please grant media library access to share."
+        );
         return;
       }
 
-      // Share the image
-      await Sharing.shareAsync(uri, {
-        mimeType: "image/png",
-        dialogTitle: "Share your Moon Phase",
-        UTI: "public.png",
+      // Capture the view as an image
+      const capturedImage = await makeImageFromView(ref);
+      if (!capturedImage) {
+        Alert.alert("Error", "Failed to capture the view.");
+        return;
+      }
+
+      // Convert image to PNG
+      const pngImage = capturedImage.encodeToBase64(ImageFormat.PNG);
+      console.log(pngImage);
+
+      // Create a file path
+      const fileName = `MoonPhase_${new Date().getTime()}.png`;
+      const fileUri = `${FileSystem.documentDirectory}${fileName}`;
+
+      // Write the image to file
+      await FileSystem.writeAsStringAsync(fileUri, pngImage, {
+        encoding: FileSystem.EncodingType.Base64,
       });
+
+      // Save to media library
+      const asset = await MediaLibrary.createAssetAsync(fileUri);
+
+      // Share to Instagram
+      if (Platform.OS === "ios") {
+        // iOS method
+        const instagramUrl = `instagram://library?AssetPath=${asset.uri}`;
+        Linking.canOpenURL(instagramUrl).then((supported) => {
+          if (supported) {
+            Linking.openURL(instagramUrl);
+          } else {
+            Alert.alert("Error", "Instagram app is not installed.");
+          }
+        });
+      } else if (Platform.OS === "android") {
+        // Android method
+        const instagramPackage = "com.instagram.android";
+        await Sharing.shareAsync(asset.uri, {
+          mimeType: "image/png",
+          dialogTitle: "Share to Instagram",
+          UTI: "com.instagram.photo",
+          packages: [instagramPackage],
+        });
+      }
     } catch (error) {
       console.error("Error sharing the image:", error);
-      Alert.alert("Error", "Failed to share the image.");
+      Alert.alert("Error", "Failed to share the image to Instagram.");
     }
   };
 
@@ -81,24 +109,17 @@ const Share = () => {
             </View>
 
             <View
-              className="items-center justify-center mt-12"
-              ref={viewRef}
+              className="flex-1"
+              ref={ref}
+              // collapsable={false} is important here
               collapsable={false}
             >
-              <Image
-                source={MoonPhase(moonPhaseStr || "First Quarter")}
-                className="w-[357px] h-[342px] "
-                resizeMode="contain"
+              <MoonPhaseDisplay
+                moonPhaseStr={moonPhaseStr}
+                name={Array.isArray(name) ? name[0] : name}
+                birthDay={Array.isArray(birthDay) ? birthDay[0] : birthDay}
+                isEnabled={isEnabled}
               />
-
-              <Text className="text-white mt-3 font-semibold text-lg">
-                {name}
-              </Text>
-              {!isEnabled && (
-                <Text className="text-white mt-3 font-semibold text-3xl">
-                  {birthDay}
-                </Text>
-              )}
             </View>
             <View className="my-10">
               <View className="flex-row items-center justify-center my-5">
