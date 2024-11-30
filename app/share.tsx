@@ -46,12 +46,11 @@ const Share = () => {
   const handleShare = async () => {
     try {
       // Capture the view as an image
-      // Add a small delay to ensure the UI is fully rendered
-      console.log("ui");
+      const uri = await captureRef(viewRef, {
+        format: "png",
+        quality: 1,
+      });
 
-      console.log("uri1");
-      const uri = await captureRef(viewRef);
-      console.log("uri");
       // Check if sharing is available
       if (!(await Sharing.isAvailableAsync())) {
         Alert.alert("Error", "Sharing is not available on this device.");
@@ -72,7 +71,7 @@ const Share = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-black h-full">
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }} ref={viewRef}>
         <View className="flex-1">
           <View className="h-[93%] items-center justify-between flex-col">
             <View className="flex-row justify-end w-full">
@@ -81,11 +80,7 @@ const Share = () => {
               </TouchableOpacity>
             </View>
 
-            <View
-              className="items-center justify-center mt-12"
-              ref={viewRef}
-              collapsable={false}
-            >
+            <View className="items-center justify-center mt-12">
               <Image
                 source={MoonPhase(moonPhaseStr || "First Quarter")}
                 className="w-[357px] h-[342px] "
