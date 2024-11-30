@@ -71,7 +71,7 @@ const Share = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-black h-full">
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }} ref={viewRef}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View className="flex-1">
           <View className="h-[93%] items-center justify-between flex-col">
             <View className="flex-row justify-end w-full">
@@ -80,7 +80,11 @@ const Share = () => {
               </TouchableOpacity>
             </View>
 
-            <View className="items-center justify-center mt-12">
+            <View
+              className="items-center justify-center mt-12"
+              ref={viewRef}
+              collapsable={false}
+            >
               <Image
                 source={MoonPhase(moonPhaseStr || "First Quarter")}
                 className="w-[357px] h-[342px] "
