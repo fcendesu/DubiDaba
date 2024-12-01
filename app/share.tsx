@@ -56,7 +56,6 @@ const Share = () => {
 
       // Convert image to PNG
       const pngImage = capturedImage.encodeToBase64(ImageFormat.PNG);
-      console.log(pngImage);
 
       // Create a file path
       const fileName = `MoonPhase_${new Date().getTime()}.png`;

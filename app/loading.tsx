@@ -27,7 +27,7 @@ const Loading = () => {
           <View className="h-[93%] items-center justify-center">
             <View>
               <LottieView
-                source={require("../assets/animations/Animation - 1730325384506.json")}
+                source={require("../assets/animations/Bl9X2N6qIB.json")}
                 autoPlay
                 loop
                 style={{ width: 200, height: 200 }}
