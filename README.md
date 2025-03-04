@@ -1,50 +1,68 @@
-# Welcome to your Expo app 👋
+# DubiDaba - Moon Phase Calculator
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+DubiDaba is a mobile application that calculates and displays the moon phase based on a person's birth date. Users can enter their name and birth date to discover their birth moon phase, then share the personalized result with others.
 
-## Get started
+## Features
 
-1. Install dependencies
+- 🌙 Accurate moon phase calculation based on birth dates
+- 👤 Personalized display with user's name
+- 📱 Clean and intuitive user interface
+- 📷 Capture and share functionality for social media
+- 🔄 Interactive animations during loading
 
+## Technology Stack
+
+- **Framework**: [Expo](https://expo.dev/) and React Native
+- **Navigation**: [Expo Router](https://docs.expo.dev/router/introduction/) with file-based routing
+- **Styling**: [NativeWind/TailwindCSS](https://www.nativewind.dev/)
+- **Graphics**: [@shopify/react-native-skia](https://github.com/Shopify/react-native-skia) for image capture
+- **Animations**: [Lottie](https://github.com/lottie-react-native/lottie-react-native)
+
+## Installation
+
+1. Clone the repository
+
+   ```bash
+   git clone https://github.com/yourusername/DubiDaba.git
+   cd DubiDaba
+   ```
+
+2. Install dependencies
    ```bash
    npm install
    ```
-
-2. Start the app
-
+3. Start the app
    ```bash
-    npx expo start
+   npx expo start
    ```
+   In the output, you'll find options to open the app in a:
 
-In the output, you'll find options to open the app in a
+Development build
+Android emulator
+iOS simulator
+Expo Go
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+App Structure and Flow
+DubiDaba features a simple and intuitive user flow:
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+1. Home Screen (app/index.tsx): Users are welcomed and can start the experience with the "BAŞLA" button
+2. Form Screen (app/form-fill.tsx): Users enter their name, surname, and birth date
+3. Loading Screen (app/loading.tsx): Displays engaging animations while calculating the moon phase
+4. Result Screen (app/share.tsx): Shows the calculated moon phase along with the user's name and provides sharing options
 
-## Get a fresh project
+Key Components
+Moon Phase Calculation: Utilizes astronomical algorithms to determine the precise moon phase for any given date
+Dynamic Visualization: Renders the appropriate moon phase image based on calculation results
+Social Sharing: Allows users to capture and share their personalized moon phase to Instagram or save to gallery
+Theme: Dark theme with custom colors optimized for moon visualization
 
-When you're ready, run:
+Development
+You can start developing by editing the files inside the app directory. This project uses file-based routing through Expo Router.
+
+For a fresh start with this project template:
 
 ```bash
 npm run reset-project
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Screenshots
