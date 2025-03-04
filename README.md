@@ -1,4 +1,4 @@
-# DubiDaba - Moon Phase Calculator
+# DubiDaba - My Birth Moon
 
 DubiDaba is a mobile application that calculates and displays the moon phase based on a person's birth date. Users can enter their name and birth date to discover their birth moon phase, then share the personalized result with others.
 
