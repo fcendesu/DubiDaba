@@ -66,3 +66,9 @@ npm run reset-project
 ```
 
 Screenshots
+
+![result](https://github.com/user-attachments/assets/c1d74605-cb6b-497f-938a-10c613cca3aa)
+![loading](https://github.com/user-attachments/assets/13b4a37f-6900-472b-8dd3-59d6381f1c37)
+![Home](https://github.com/user-attachments/assets/a03d33c1-be40-4233-a4ec-d369aa8b9ba3)
+![form](https://github.com/user-attachments/assets/dca7340a-21a1-44b4-ba69-664cf968e257)
+
